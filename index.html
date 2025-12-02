@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Bike Manufacturing ERP System</title>
+  <style>
+    /* Design System */
+    :root {
+      --color-white: rgba(255, 255, 255, 1);
+      --color-black: rgba(0, 0, 0, 1);
+      --color-cream-50: rgba(252, 252, 249, 1);
+      --color-cream-100: rgba(255, 255, 253, 1);
+      --color-gray-200: rgba(245, 245, 245, 1);
+      --color-gray-300: rgba(167, 169, 169, 1);
+      --color-gray-400: rgba(119, 124, 124, 1);
+      --color-slate-500: rgba(98, 108, 113, 1);
+      --color-brown-600: rgba(94, 82, 64, 1);
+      --color-charcoal-700: rgba(31, 33, 33, 1);
+      --color-charcoal-800: rgba(38, 40, 40, 1);
+      --color-slate-900: rgba(19, 52, 59, 1);
+      --color-teal-300: rgba(50, 184, 198, 1);
+      --color-teal-400: rgba(45, 166, 178, 1);
+      --color-teal-500: rgba(33, 128, 141, 1);
+      --color-teal-600: rgba(29, 116, 128, 1);
+      --color-teal-700: rgba(26, 104, 115, 1);
+      --color-red-400: rgba(255, 84, 89, 1);
+      --color-red-500: rgba(192, 21, 47, 1);
+      --color-orange-400: rgba(230, 129, 97, 1);
+      --color-orange-500: rgba(168, 75, 47, 1);
+
+      --color-brown-600-rgb: 94, 82, 64;
+      --color-teal-500-rgb: 33, 128, 141;
+      --color-slate-900-rgb: 19, 52, 59;
+      --color-slate-500-rgb: 98, 108, 113;
+      --color-red-500-rgb: 192, 21, 47;
+      --color-orange-500-rgb: 168, 75, 47;
+
+      --color-bg-1: rgba(59, 130, 246, 0.08);
+      --color-bg-2: rgba(245, 158, 11, 0.08);
+      --color-bg-3: rgba(34, 197, 94, 0.08);
+      --color-bg-4: rgba(239, 68, 68, 0.08);
+
+      --color-background: var(--color-cream-50);
+      --color-surface: var(--color-cream-100);
+      --color-text: var(--color-slate-900);
+      --color-text-secondary: var(--color-slate-500);
+      --color-primary: var(--color-teal-500);
+      --color-primary-hover: var(--color-teal-600);
+      --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+      --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+      --color-success: var(--color-teal-500);
+      --color-error: var(--color-red-500);
+      --color-warning: var(--color-orange-500);
+      --color-success-rgb: 33, 128, 141;
+      --color-error-rgb: 192, 21, 47;
+      --color-warning-rgb: 168, 75, 47;
+
+      --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-size-xs: 11px;
+      --font-size-sm: 12px;
+      --font-size-base: 14px;
+      --font-size-lg: 16px;
+      --font-size-xl: 18px;
+      --font-size-2xl: 20px;
+      --font-size-3xl: 24px;
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 550;
+      --font-weight-bold: 600;
+
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-20: 20px;
+      --space-24: 24px;
+      --space-32: 32px;
+
+      --radius-sm: 6px;
+      --radius-base: 8px;
+      --radius-lg: 12px;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-gray-400-rgb: 119, 124, 124;
+        --color-teal-300-rgb: 50, 184, 198;
+        --color-gray-300-rgb: 167, 169, 169;
+        --color-gray-200-rgb: 245, 245, 245;
+
+        --color-bg-1: rgba(29, 78, 216, 0.15);
+        --color-bg-2: rgba(180, 83, 9, 0.15);
+        --color-bg-3: rgba(21, 128, 61, 0.15);
+        --color-bg-4: rgba(185, 28, 28, 0.15);
+
+        --color-background: var(--color-charcoal-700);
+        --color-surface: var(--color-charcoal-800);
+        --color-text: var(--color-gray-200);
+        --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+        --color-primary: var(--color-teal-300);
+        --color-primary-hover: var(--color-teal-400);
+        --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+        --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+        --color-error: var(--color-red-400);
+        --color-success: var(--color-teal-300);
+        --color-warning: var(--color-orange-400);
+        --color-success-rgb: 50, 184, 198;
+        --color-error-rgb: 255, 84, 89;
+        --color-warning-rgb: 230, 129, 97;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      background-color: var(--color-background);
+      color: var(--color-text);
+      line-height: 1.5;
+      font-size: var(--font-size-base);
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-16) var(--space-24);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header h1 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+    }
+
+    .header p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-4);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: var(--space-8);
+      background-color: var(--color-surface);
+      padding: 0 var(--space-24);
+      border-bottom: 1px solid var(--color-border);
+      overflow-x: auto;
+    }
+
+    .nav-tab {
+      padding: var(--space-12) var(--space-20);
+      background: none;
+      border: none;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .nav-tab:hover {
+      color: var(--color-text);
+    }
+
+    .nav-tab.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    .content {
+      flex: 1;
+      padding: var(--space-24);
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-24);
+      margin-bottom: var(--space-24);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-20);
+    }
+
+    .card-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+    }
+
+    .btn {
+      padding: var(--space-8) var(--space-16);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-bg-1);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-bg-2);
+    }
+
+    .btn-small {
+      padding: var(--space-4) var(--space-12);
+      font-size: var(--font-size-sm);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: var(--color-bg-1);
+    }
+
+    th {
+      text-align: left;
+      padding: var(--space-12);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    td {
+      padding: var(--space-12);
+      border-bottom: 1px solid var(--color-card-border);
+      font-size: var(--font-size-sm);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--space-4) var(--space-12);
+      border-radius: 12px;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .status-completed {
+      background-color: rgba(var(--color-success-rgb), 0.15);
+      color: var(--color-success);
+    }
+
+    .status-in-progress {
+      background-color: var(--color-bg-1);
+      color: #3b82f6;
+    }
+
+    .status-pending {
+      background-color: rgba(var(--color-warning-rgb), 0.15);
+      color: var(--color-warning);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-24);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-24);
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-16);
+    }
+
+    .stat-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-20);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-8);
+    }
+
+    .stat-value {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-16);
+    }
+
+    .form-label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+      margin-bottom: var(--space-8);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--space-8) var(--space-12);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-base);
+      font-size: var(--font-size-base);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+    }
+
+    .form-control:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 0;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-24);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--color-surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-24);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-20);
+    }
+
+    .modal-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: var(--font-size-2xl);
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      padding: var(--space-4);
+    }
+
+    .close-btn:hover {
+      color: var(--color-text);
+    }
+
+    .workflow-step {
+      padding: var(--space-16);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-base);
+      margin-bottom: var(--space-12);
+      background-color: var(--color-bg-1);
+    }
+
+    .workflow-step.completed {
+      background-color: rgba(var(--color-success-rgb), 0.1);
+      border-color: var(--color-success);
+    }
+
+    .workflow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .workflow-title {
+      font-weight: var(--font-weight-medium);
+      font-size: var(--font-size-base);
+    }
+
+    .workflow-details {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-8);
+    }
+
+    .category-section {
+      margin-bottom: var(--space-24);
+    }
+
+    .category-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-12);
+      padding-bottom: var(--space-8);
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .cost-summary {
+      background-color: var(--color-bg-3);
+      padding: var(--space-20);
+      border-radius: var(--radius-lg);
+      margin-top: var(--space-24);
+    }
+
+    .cost-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-8) 0;
+      font-size: var(--font-size-base);
+    }
+
+    .cost-row.total {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      border-top: 2px solid var(--color-border);
+      padding-top: var(--space-12);
+      margin-top: var(--space-12);
+    }
+
+    .build-list-item {
+      padding: var(--space-16);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-base);
+      margin-bottom: var(--space-12);
+      cursor: pointer;
+      transition: all 0.2s;
+      background-color: var(--color-surface);
+    }
+
+    .build-list-item:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .build-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .build-id {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-size-base);
+    }
+
+    .build-info {
+      display: flex;
+      gap: var(--space-16);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .time-input {
+      width: 80px;
+      padding: var(--space-4) var(--space-8);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-sm);
+    }
+
+    .labor-log {
+      margin-top: var(--space-16);
+    }
+
+    .labor-entry {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-8);
+      background-color: var(--color-bg-1);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-8);
+      font-size: var(--font-size-sm);
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        padding: var(--space-16);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1>E-Bike Manufacturing ERP</h1>
+      <p>Production Management &amp; Build Tracking System</p>
+    </div>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('bom')">BOM Manager</button>
+      <button class="nav-tab" onclick="switchTab('builds')">Build Tracker</button>
+      <button class="nav-tab" onclick="switchTab('orders')">Production Orders</button>
+      <button class="nav-tab" onclick="switchTab('workflow')">Workflow</button>
+      <button class="nav-tab" onclick="switchTab('analytics')">Analytics</button>
+    </div>
+
+    <div class="content">
+      <!-- BOM Manager Tab -->
+      <div id="bom-tab" class="tab-content active">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Standard E-Bike Bill of Materials</h2>
+            <button class="btn btn-secondary" onclick="exportBOM()">Export BOM</button>
+          </div>
+          <div id="bom-content"></div>
+          <div class="cost-summary">
+            <div class="cost-row">
+              <span>Subtotal (Parts):</span>
+              <span id="bom-subtotal">$0.00</span>
+            </div>
+            <div class="cost-row total">
+              <span>Total Standard BOM Cost:</span>
+              <span id="bom-total">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Build Tracker Tab -->
+      <div id="builds-tab" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Active Builds</h2>
+            <button class="btn btn-primary" onclick="openNewBuildModal()">+ New Build</button>
+          </div>
+          <div id="builds-list"></div>
+        </div>
+      </div>
+
+      <!-- Production Orders Tab -->
+      <div id="orders-tab" class="tab-content">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Production Orders</h2>
+            <button class="btn btn-primary" onclick="openNewOrderModal()">+ New Order</button>
+          </div>
+          <div id="orders-list"></div>
+        </div>
+      </div>
+
+      <!-- Workflow Tab -->
+      <div id="workflow-tab" class="tab-content">
+        <div class="card">
+          <h2 class="card-title">Assembly Workflow Pipeline</h2>
+          <p style="margin-top: 12px; color: var(--color-text-secondary); font-size: var(--font-size-sm);">Select a build from Build Tracker to view workflow details</p>
+          <div id="workflow-content" style="margin-top: 24px;"></div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div id="analytics-tab" class="tab-content">
+        <div class="grid-4">
+          <div class="stat-card">
+            <div class="stat-label">Total Builds Completed</div>
+            <div class="stat-value" id="stat-completed">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Cost Per Unit</div>
+            <div class="stat-value" id="stat-avg-cost">$0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Labor Hours</div>
+            <div class="stat-value" id="stat-avg-hours">0h</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">In Progress</div>
+            <div class="stat-value" id="stat-in-progress">0</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+          <h2 class="card-title">Cost Analysis</h2>
+          <div id="cost-analysis-content" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Production History</h2>
+          <div id="production-history" style="margin-top: 20px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Build Modal -->
+  <div id="new-build-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Build</h3>
+        <button class="close-btn" onclick="closeModal('new-build-modal')">&times;</button>
+      </div>
+      <form onsubmit="createNewBuild(event)">
+        <div class="form-group">
+          <label class="form-label">Build ID</label>
+          <input type="text" class="form-control" id="new-build-id" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Model Variant</label>
+          <select class="form-control" id="new-build-model" required>
+            <option>Standard eBike</option>
+            <option>Premium eBike</option>
+            <option>Budget eBike</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Technician</label>
+          <input type="text" class="form-control" id="new-build-technician" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Start Date</label>
+          <input type="date" class="form-control" id="new-build-date" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Build</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Build Details Modal -->
+  <div id="build-details-modal" class="modal">
+    <div class="modal-content" style="max-width: 1000px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="build-details-title">Build Details</h3>
+        <button class="close-btn" onclick="closeModal('build-details-modal')">&times;</button>
+      </div>
+      <div id="build-details-content"></div>
+    </div>
+  </div>
+
+  <!-- New Order Modal -->
+  <div id="new-order-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Production Order</h3>
+        <button class="close-btn" onclick="closeModal('new-order-modal')">&times;</button>
+      </div>
+      <form onsubmit="createNewOrder(event)">
+        <div class="form-group">
+          <label class="form-label">Order ID</label>
+          <input type="text" class="form-control" id="new-order-id" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input type="number" class="form-control" id="new-order-qty" min="1" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Model</label>
+          <select class="form-control" id="new-order-model" required>
+            <option>Standard eBike</option>
+            <option>Premium eBike</option>
+            <option>Budget eBike</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Delivery Date</label>
+          <input type="date" class="form-control" id="new-order-date" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Order</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
